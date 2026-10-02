@@ -1,0 +1,24 @@
+Router A	
+Router(config)#router ospf 1
+Router(config-router)#network 192.168.1.0 0.0.0.255 area 1
+Router(config-router)#network 10.1.1.0 0.0.0.255 area 1
+Router(config-router)#end
+
+Router B
+Router(config)#router ospf 1
+Router(config-router)#network 192.168.2.0 0.0.0.255 area 1
+Router(config-router)#network 10.1.1.0 0.0.0.255 area 1
+Router(config-router)#network 11.1.1.0 0.0.0.255 area 1
+Router(config-router)#end
+
+Router c
+Router(config)#router ospf 1
+Router(config-router)#network 11.1.1.0 0.0.0.255 area 1
+Router(config-router)#network 12.1.1.0 0.0.0.255 area 1
+Router(config-router)#network 192.168.3.0 0.0.0.255 area 1
+
+Router D
+Router(config)#router ospf 1
+Router(config-router)#network 192.168.4.0 0.0.0.255 area 1
+Router(config-router)#network 12.1.1.0 0.0.0.255 area 1
+Router(config-router)#end

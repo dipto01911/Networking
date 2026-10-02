@@ -1,0 +1,92 @@
+Router 0 configuration
+
+Router>en
+Router#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#int Gig0/0/0
+Router(config-if)#ip address 192.168.1.1 255.255.255.0
+Router(config-if)#no shut
+Router(config-if)#exit
+Router(config)#int Gig0/0/1
+Router(config-if)#ip address 10.1.1.1 255.255.255.0
+Router(config-if)#no shut
+Router(config-if)#exit
+Router(config)#router ospf 1
+Router(config-router)#network 192.168.1.0 0.0.0.255 area 0
+Router(config-router)#network 10.1.1.0 0.0.0.255 area 0
+Router(config-router)#exit
+Router(config)#int Gig0/0/0
+Router(config-if)#ip helper-address 192.168.1.2
+Router(config-if)#exit
+Router(config)#int Gig0/0/1
+Router(config-if)#ip helper-address 192.168.1.2
+Router(config-if)#exit
+
+Router 1 configurations
+Router>en
+Router#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#int Gig0/0/1
+Router(config-if)#ip address 10.1.1.2 255.255.255.0
+Router(config-if)#no shut
+Router(config-if)#exit
+Router(config)#int Gig0/0/0
+Router(config-if)#ip address 192.168.2.1 255.255.255.0
+Router(config-if)#no shut
+
+Router(config-if)#exit
+Router(config)#int Se0/1/1
+Router(config-if)#ip address 11.1.1.1 255.255.255.0
+Router(config-if)#no shut
+Router(config)#router ospf 1
+Router(config-router)#network 10.1.1.0 0.0.0.255 area 0
+Router(config-router)#network 11.1.1.0 0.0.0.255 area 0
+Router(config-router)#network 192.168.2.0 0.0.0.255 area 0
+Router(config-router)#exit
+Router(config)#int Gig0/0/1
+Router(config-if)#ip helper-address 192.168.1.2
+Router(config-if)#exit
+Router(config)#int Gig0/0/0
+Router(config-if)#ip helper-address 192.168.1.2
+Router(config-if)#int Se0/1/1
+Router(config-if)#ip helper-address 192.168.1.2
+
+
+Router 2 configurations
+Router>en
+Router#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#int Se0/1/1
+Router(config-if)#ip address 11.1.1.2 255.255.255.0
+Router(config-if)#no shut
+Router(config)#int Gig0/0/0
+Router(config-if)#ip address 192.168.3.1 255.255.255.0
+Router(config-if)#no shut
+Router(config-if)#exit
+Router(config)#router ospf 1
+Router(config-router)#network 11.1.1.0 0.0.0.255 area 0
+Router(config-router)#network 192.168.3.0 0.0.0.255 area 0
+Router(config-router)#exit
+Router(config)#int Se0/1/1
+Router(config-if)#ip helper-address 192.168.1.2
+Router(config-if)#exit
+Router(config)#int Gig0/0/0
+Router(config-if)#ip helper-address 192.168.1.2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

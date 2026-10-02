@@ -1,0 +1,27 @@
+Standard ACL
+
+Number ACL
+Router 2 configuration
+
+access-list 10 deny 192.168.1.2 0.0.0.0
+access-list 10 permit any
+int Gig0/0/1
+ip access-group 10 out
+
+another method
+Router(config)#ip access-list standard 10
+Router(config-std-nacl)#deny 192.168.1.3 0.0.0.0
+Router(config-std-nacl)#permit any
+Router(config-std-nacl)#exit
+Router(config)#int Gig0/0/1
+Router(config-if)#ip access-group 10 out
+
+Name ACL
+
+Router(config)#ip access-list standard dipto
+Router(config-std-nacl)#deny 192.168.1.2 0.0.0.0
+Router(config-std-nacl)#permit any
+Router(config-std-nacl)#exit
+Router(config)#int Gig0/0/1
+Router(config-if)#ip access-group dipto out
+Router(config-if)#exit

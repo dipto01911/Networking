@@ -1,0 +1,111 @@
+Switch 0 configuration
+
+** First create two vlan
+Switch>en
+Switch#config t
+Switch(config)#vlan 10
+Switch(config-vlan)#name hr
+Switch(config-vlan)#exit
+Switch(config)#vlan 20
+Switch(config-vlan)#name sales
+Switch(config-vlan)#exit
+
+** Binding two vlan
+Switch(config)#int range Fa0/1-2
+Switch(config-if-range)#switchport mode access
+Switch(config-if-range)#switchport access vlan 10
+** allow trunk port
+Switch(config)#int Gig0/1
+Switch(config-if)# switchport trunk encapsulation dot1q (optional)
+Switch(config-if)#switchport mode trunk
+Switch(config-if)#switchport trunk allowed vlan all
+
+
+Switch 1 configuration
+** First create two vlan
+Switch>en
+Switch#config t
+Switch(config)#vlan 10
+Switch(config-vlan)#name hr
+Switch(config-vlan)#exit
+Switch(config)#vlan 20
+Switch(config-vlan)#name sales
+Switch(config-vlan)#exit
+
+** Binding two vlan
+Switch(config)#int range Fa0/1-2
+Switch(config-if-range)#switchport mode access
+Switch(config-if-range)#switchport access vlan 20
+Switch(config-if-range)#exit
+** allow trunk port
+Switch(config)#int Gig0/2
+Switch(config-if)# switchport trunk encapsulation dot1q (optional)
+Switch(config-if)#switchport mode trunk
+Switch(config-if)#switchport trunk allowed vlan all
+
+Multilayer Switch configuration
+** Frist create two vlan
+Switch#config t
+Switch(config)#vlan 10
+Switch(config-vlan)#name hr
+Switch(config-vlan)#exit
+
+Switch(config)#vlan 20
+Switch(config-vlan)#name sales
+Switch(config-vlan)#exit
+
+** create Vlan interface 
+Switch(config)#int vlan 10
+Switch(config-if)#ip address 192.168.10.1 255.255.255.0
+Switch(config-if)#exit
+
+Switch(config)#int vlan 20
+Switch(config-if)#ip address 192.168.20.1 255.255.255.0 
+Switch(config-if)#exit
+
+**create two different pool for two vlan
+
+Switch(config)#ip dhcp pool vlan10
+Switch(dhcp-config)#network 192.168.10.0 255.255.255.0
+Switch(dhcp-config)#default 192.168.10.1
+Switch(dhcp-config)#exit
+
+Switch(config)#ip dhcp pool vlan20
+Switch(dhcp-config)#network 192.168.20.0 255.255.255.0
+Switch(dhcp-config)#default-router 192.168.20.1
+Switch(dhcp-config)#exit
+
+Switch#sh running-config | section dhcp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
