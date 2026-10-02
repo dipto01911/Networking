@@ -1,0 +1,22 @@
+** create two vlan 
+Switch>en
+Switch#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#vlan 10
+Switch(config-vlan)#name hr
+Switch(config-vlan)#exit
+Switch(config)#name vlan 20
+
+**assign port for vlan 10
+Switch(config)#int range Fa0/1-2
+Switch(config-if-range)#switchport mode access
+Switch(config-if-range)#switchport access vlan 10
+Switch(config-if-range)#exit
+Switch(config)#do sh vlan brief
+
+** assign port for vlan 20
+Switch(config)#int range Fa0/3-4
+Switch(config-if-range)#switchport mode access
+Switch(config-if-range)#switchport access vlan 20
+Switch(config-if-range)#exit
+Switch(config)#do sh vlan brief

@@ -1,0 +1,89 @@
+Switch 0 Configuration
+**create vlan first
+Switch>en
+Switch#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#vlan 10
+Switch(config-vlan)#name hr
+Switch(config-vlan)#exit
+Switch(config)#vlan 20
+Switch(config-vlan)#name sales
+Switch(config-vlan)#exit
+
+**binding vlan with port
+Switch(config)#int range Fa0/1-2
+Switch(config-if-range)#switchport mode access
+Switch(config-if-range)#switchport access vlan 10
+Switch(config-if-range)#exit
+Switch(config)#int range Fa0/3-4
+Switch(config-if-range)#switchport mode access
+Switch(config-if-range)#switchport access vlan 20
+Switch(config-if-range)#exit
+
+Switch 1 Configuration
+**create vlan first
+Switch>en
+Switch#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#vlan 10
+Switch(config-vlan)#name hr
+Switch(config-vlan)#exit
+Switch(config)#vlan 20
+Switch(config-vlan)#name sales
+Switch(config-vlan)#exit
+
+**binding vlan with port
+Switch(config)#int range Fa0/1-2
+Switch(config-if-range)#switchport mode access
+Switch(config-if-range)#switchport access vlan 10
+Switch(config-if-range)#exit
+Switch(config)#int range Fa0/3-4
+Switch(config-if-range)#switchport mode access
+Switch(config-if-range)#switchport access vlan 20
+Switch(config-if-range)#exit
+
+**Assign trunk port
+Switch(config)#int Gig0/1
+Switch(config-if)#switchport trunk encapsulation dot1q (optional)
+Switch(config-if)#switchport mode trunk
+Switch(config-if)#switchport trunk allowed vlan all
+Switch(config-if)#exit
+Switch(config)#int Gig0/2
+Switch(config-if)#switchport mode trunk
+Switch(config-if)#switchport trunk allowed vlan all
+Switch(config-if)#exit
+
+Router configuration
+**First enable port of the router
+Router# config t
+Router(config)#int Gig0/0/0
+Router(config-if)#no shut
+
+**create subinterface for vlan 10 and vlan 20
+
+Router(config)#int Gig0/0/0.10
+Router(config-subif)#encapsulation dot1q 10
+Router(config-subif)#ip address 192.168.10.1 255.255.255.0
+Router(config-subif)#exit
+Router(config)#int Gig0/0/0.20
+Router(config-subif)#encapsulation dot1q 20
+Router(config-subif)#ip address 192.168.20.1 255.255.255.0
+Router(config-subif)#exit
+
+**create dhcp pool for the vlan 10 and 20 
+Router(config)#ip dhcp pool vlan10
+Router(dhcp-config)#network 192.168.10.0 255.255.255.0
+Router(dhcp-config)#default-router 192.168.10.1
+Router(dhcp-config)#dns-server 8.8.8.8
+Router(config)#ip dhcp pool vlan20
+Router(dhcp-config)#network 192.168.20.0 255.255.255.0
+Router(dhcp-config)#default-router 192.168.20.1
+Router(dhcp-config)#dns-server 8.8.8.1
+Router(dhcp-config)#exit
+
+
+
+
+
+
+

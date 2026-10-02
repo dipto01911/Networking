@@ -1,0 +1,13 @@
+Router A NAT
+
+Router>en
+Router#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#int Gig0/0/0 
+Router(config-if)#ip nat inside
+Router(config-if)#exit
+Router(config)#int Gig0/0/1
+Router(config-if)#ip nat outside
+Router(config-if)#exit
+Router(config)#ip nat inside source  static 192.168.10.3 10.1.1.1
+Router(config)#exit

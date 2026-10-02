@@ -1,0 +1,103 @@
+EtherChannel
+
+***Configure multilayer switch 2
+
+static etherchannel with multilayer switch 3
+Switch>en
+Switch#config t
+Switch(config)#int range Fa0/1-4
+Switch(config-if-range)#no switchport
+Switch(config-if-range)#channel-group 1 mode on
+Switch(config)#int port-channel 1
+Switch(config-if)#ip address 192.168.1.1 255.255.255.0
+Switch(config-if)#no shut
+Switch(config-if)#exit
+
+PAGP(Port Aggression protocol ) configuration with Switch 2
+Switch(config)#int range Fa0/5-6
+Switch(config-if-range)#no switchport
+Switch(config-if-range)#channel-group 2 mode desirable
+Switch(config)#int port-channel 2
+Switch(config-if)#ip address 192.168.2.1 255.255.255.0
+Switch(config-if)#no shut
+
+ospf configuration
+Switch(config)#ip routing
+Switch(config)#router ospf 1
+Switch(config-router)#network 192.168.2.0 0.0.0.255 area 0
+Switch(config-router)#network 192.168.1.0 0.0.0.255 area 0
+
+***Configure multilayer switch 2
+static etherchannel with multilayer switch 2
+Switch>en
+Switch#config t
+Switch(config)#int range Fa0/1-4
+Switch(config-if-range)#no switchport
+Switch(config-if-range)#channel-group 1 mode on
+Switch(config)#int port-channel 1
+Switch(config-if)#ip address 192.168.1.2 255.255.255.0
+Switch(config-if)#no shut
+Switch(config-if)#exit
+
+
+LACP(Link Aggression control protocol) configuration with Switch 3
+Switch(config)#int range Fa0/5-6
+Switch(config-if-range)#no switchport
+Switch(config-if-range)#channel-group 3 mode active
+Switch(config)#int port-channel 2
+Switch(config-if)#ip address 192.168.3.1 255.255.255.0
+Switch(config-if)#no shut
+
+ospf configuration
+Switch(config)#ip routing
+Switch(config)#router ospf 1
+Switch(config-router)#network 192.168.3.0 0.0.0.255 area 0
+Switch(config-router)#network 192.168.1.0 0.0.0.255 area 0
+
+
+*** configuration Switch 2 
+PAGP configuration with Multilayer switch 2
+Switch>en
+Switch#config t
+Switch(config)#int range Fa0/1-2
+Switch(config-if-range)#channel-group 2 mode desirable
+Switch(config-if-range)#exit
+Switch(config)#do sh etherchannel
+
+*** configuration Switch 3
+LACP configuration with Multilayer switch 3
+Switch>en
+Switch#config t
+Switch(config)#int range Fa0/1-2
+Switch(config-if-range)#channel-group 3 mode desirable
+Switch(config-if-range)#exit
+Switch(config)#do sh etherchannel
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Switch(config-if-range)#channel-group 1 mode on
+Switch(config)#int port-channel 1

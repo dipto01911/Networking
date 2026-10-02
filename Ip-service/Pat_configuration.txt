@@ -1,0 +1,13 @@
+NAT configurations
+
+Router#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#access-list 1 permit 192.168.1.0 0.0.0.255
+Router(config)#int Gig0/0/1
+Router(config-if)#ip nat inside
+Router(config-if)#exit
+Router(config)#int Gig0/0/0
+Router(config-if)#ip nat outside
+Router(config-if)#exit
+Router(config)#ip nat inside source list 1 int Gig0/0/0 overload
+Router(config)#end

@@ -1,0 +1,67 @@
+Requirement
+192.168.1.2 pc can only able to access host 192.168.3.2
+any host in network 192.168.2.0 can able to access host 192.168.3.2
+host 192.168.1.3 can not able to access 192.168.3.3 host via https
+
+
+First configure ospf to the network then perform ACL
+
+ip access-list extended dipto
+Router(config-ext-nacl)#permit ip host 192.168.1.2 host 192.168.3.2 
+Router(config-ext-nacl)#exit
+Router(config)#int Se0/1/0
+Router(config-if)#ip access-group dipto out
+Router(config)#ip access-list extended dipto
+Router(config-ext-nacl)#deny ip any host 192.168.3.2
+Router(config)#ip access-list extended dipto
+Router(config-ext-nacl)#permit ip 192.168.2.0 0.0.0.255 host 192.168.3.3
+Router(config-ext-nacl)#exit
+Router(config)#do sh ip access-lists
+Extended IP access list dipto
+    10 permit ip host 192.168.1.2 host 192.168.3.2 (4 match(es))
+    20 deny ip any host 192.168.3.2 (2 match(es))
+    30 permit ip 192.168.2.0 0.0.0.255 host 192.168.3.3
+Router(config)#ip access-list extended dipto
+Router(config-ext-nacl)#deny ip any any
+outer(config)#ip access-list extended dipto
+Router(config-ext-nacl)#25 deny tcp host 192.168.1.3 host 192.168.3.3 eq 443
+Router(config-ext-nacl)#exit
+Router(config)#do sh access-lists
+Extended IP access list dipto
+    10 permit ip host 192.168.1.2 host 192.168.3.2 (8 match(es))
+    20 deny ip any host 192.168.3.2 (30 match(es))
+    25 deny tcp host 192.168.1.3 host 192.168.3.3 eq 443
+    30 permit ip 192.168.2.0 0.0.0.255 host 192.168.3.3 (4 match(es))
+    40 deny ip any any
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    20 deny ip any host 192.168.3.2 (2 match(es))
+    30 permit ip 192.168.2.0 0.0.0.255 host 192.168.3.3
